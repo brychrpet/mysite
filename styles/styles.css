@@ -452,7 +452,7 @@ main p img:not(:first-of-type) {
   margin-left: 0;
 }
 
-.marquee-title h1 {
+.marquee-h1 {
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
