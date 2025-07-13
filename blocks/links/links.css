@@ -1,0 +1,6 @@
+.links a {
+  display: block;
+  margin: 12px 0;
+  color: cyan;
+  text-decoration: underline;
+}
