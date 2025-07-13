@@ -346,3 +346,15 @@ main .section > div {
   margin: 0 auto;
   padding: 0 16px;
 }
+
+main h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-top: 64px;
+}
+
+main img {
+  display: block;
+  margin: 16px auto;
+  max-width: 100%;
+}
