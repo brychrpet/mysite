@@ -300,3 +300,30 @@ html, body {
 main {
   background: transparent !important;
 }
+
+/* Force page-wide star background */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-image: url('/images/background-stars.gif');
+  background-repeat: repeat;
+  background-color: black;
+  color: white;
+  font-family: 'Comic Neue', sans-serif;
+  font-size: var(--body-font-size-m);
+  line-height: 1.6;
+  height: 100%;
+}
+
+/* Remove default white from all sections */
+main,
+main > .section,
+main > .section > div {
+  background: transparent !important;
+}
+
+/* Optional: remove padding/margins if needed */
+main > .section > div {
+  padding: 0 !important;
+  margin: 0 !important;
+}
