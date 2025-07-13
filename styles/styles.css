@@ -365,7 +365,16 @@ main img {
   color: white !important;
 }
 
-header nav,
-header nav * {
+header nav {
+  justify-content: flex-start !important;
   text-align: left !important;
 }
+
+header .nav-sections ul {
+  justify-content: flex-start !important;
+}
+
+header .nav-sections .default-content-wrapper > ul {
+  justify-content: flex-start !important;
+}
+
