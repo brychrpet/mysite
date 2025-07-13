@@ -367,6 +367,11 @@ main .section > div {
   padding-left: 0 !important;
 }
 
+header nav {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
 main h1 {
   text-align: center;
   font-size: 2.2rem;
