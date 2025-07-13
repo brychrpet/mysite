@@ -478,3 +478,8 @@ main p img:not(:first-of-type) {
 .block.links li {
   margin: 0.5em 0;
 }
+
+table.links thead {
+  display: none;
+}
+
