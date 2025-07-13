@@ -430,3 +430,24 @@ header nav .nav-sections ul {
 header nav .nav-sections ul > li[aria-expanded='true'] > ul {
   display: block;
 }
+
+/* Center only images directly following H1 */
+main h1 + p img,
+main h1 + div img {
+  display: block;
+  margin: 16px auto;
+}
+
+/* Left-align all other images */
+main img {
+  display: block;
+  margin: 16px 0 16px 0;
+  max-width: 100%;
+}
+
+/* Specific override: only if it's *not* right under h1 */
+main h2 + p img,
+main h3 + p img,
+main p img:not(:first-of-type) {
+  margin-left: 0;
+}
