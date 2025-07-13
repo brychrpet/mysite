@@ -282,3 +282,21 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+
+/* ✅background stuffs */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-image: url('/images/background-stars.gif');
+  background-repeat: repeat;
+  background-color: black;
+  color: white;
+  font-family: 'Comic Neue', sans-serif;
+  font-size: var(--body-font-size-m);
+  line-height: 1.6;
+  height: 100%;
+}
+
+main {
+  background: transparent !important;
+}
