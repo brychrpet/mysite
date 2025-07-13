@@ -348,6 +348,13 @@ main .section > div {
   padding: 0 16px;
 }
 
+/* nav alignment */
+main .section > div:has(header .nav-wrapper) {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 main h1 {
   text-align: center;
   font-size: 2.2rem;
