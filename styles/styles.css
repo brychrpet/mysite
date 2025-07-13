@@ -469,3 +469,12 @@ main p img:not(:first-of-type) {
 .block.links.hide-header thead {
   display: none;
 }
+
+.block.links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.block.links li {
+  margin: 0.5em 0;
+}
