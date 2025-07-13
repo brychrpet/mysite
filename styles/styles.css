@@ -466,11 +466,6 @@ main p img:not(:first-of-type) {
 }
 
 /* Links */
-.block.links thead tr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
+.block.links.hide-header thead {
+  display: none;
 }
