@@ -359,3 +359,8 @@ main img {
   margin: 16px auto;
   max-width: 100%;
 }
+
+.nav-sections li[aria-expanded='true'] > ul {
+  background-color: black !important;
+  color: white !important;
+}
