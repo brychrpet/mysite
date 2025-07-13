@@ -454,6 +454,7 @@ main p img:not(:first-of-type) {
 
 .marquee-h1 {
   overflow: hidden;
+  color: magenta; 
   white-space: nowrap;
   box-sizing: border-box;
   animation: marquee 12s linear infinite;
