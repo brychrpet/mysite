@@ -451,3 +451,15 @@ main h3 + p img,
 main p img:not(:first-of-type) {
   margin-left: 0;
 }
+
+.marquee-title h1 {
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  animation: marquee 12s linear infinite;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
