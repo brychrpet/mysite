@@ -349,10 +349,22 @@ main .section > div {
 }
 
 /* nav alignment */
-main .section > div:has(header .nav-wrapper) {
-  max-width: none !important;
+main .section > div > header {
   margin: 0 !important;
   padding: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+main .section > div > header .nav-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+main .section > div {
+  padding-left: 0 !important;
 }
 
 main h1 {
