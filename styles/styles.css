@@ -483,3 +483,7 @@ table.links thead {
   display: none;
 }
 
+.cards p,
+.cards strong {
+  color: black !important;
+}
