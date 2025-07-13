@@ -365,16 +365,43 @@ main img {
   color: white !important;
 }
 
+header .nav-wrapper {
+  background-color: black;
+  width: 100%;
+  margin: 0;
+  padding: 0 24px;
+}
+
 header nav {
-  justify-content: flex-start !important;
-  text-align: left !important;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: black;
+  color: white;
+  max-width: none;
+  margin: 0;
+  padding: 0 32px;
 }
 
-header .nav-sections ul {
-  justify-content: flex-start !important;
+header nav .nav-sections ul {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  color: white;
 }
 
-header .nav-sections .default-content-wrapper > ul {
-  justify-content: flex-start !important;
+header nav .nav-sections ul > li > ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: black;
+  color: white;
+  padding: 12px;
 }
 
+header nav .nav-sections ul > li[aria-expanded='true'] > ul {
+  display: block;
+}
