@@ -364,3 +364,8 @@ main img {
   background-color: black !important;
   color: white !important;
 }
+
+header nav,
+header nav * {
+  text-align: left !important;
+}
