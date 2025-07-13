@@ -72,6 +72,8 @@
   }
 }
 
+/* Original background-color rule preserved for reference */
+/*
 body {
   display: none;
   margin: 0;
@@ -81,6 +83,21 @@ body {
   font-size: var(--body-font-size-m);
   line-height: 1.6;
 }
+*/
+
+/* Custom background image version */
+body {
+  display: none;
+  margin: 0;
+  background-image: url('/images/background-stars.gif');
+  background-repeat: repeat;
+  background-color: black; /* fallback for failed image load */
+  color: white; /* override if text is too dark */
+  font-family: 'Comic Neue', sans-serif; /* or fallback to existing var */
+  font-size: var(--body-font-size-m);
+  line-height: 1.6;
+}
+
 
 body.appear {
   display: block;
