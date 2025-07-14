@@ -514,7 +514,7 @@ table.links thead {
   color: black !important;
 }
 
-
+/* Cyan Hyperlinks  */
 a {
   color: cyan; /* default link color */
   text-decoration: underline;
@@ -531,4 +531,14 @@ a:hover {
 
 a:active {
   color: cyan;
+}
+
+/* Blink  */
+@keyframes blink {
+  0%, 50%, 100% { visibility: visible; }
+  25%, 75% { visibility: hidden; }
+}
+
+.blinky {
+  animation: blink 1s step-start infinite;
 }
