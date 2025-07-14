@@ -128,7 +128,7 @@ async function loadPage() {
 
 document.addEventListener('DOMContentLoaded', () => {
   const h1 = document.querySelector('h1');
-  if (h1 && h1.textContent.includes('Drop the Potato Chips')) {
+  if (h1 && h1.textContent.includes('Drop the Doritos')) {
     h1.classList.add('marquee-h1');
   }
 });
