@@ -460,6 +460,21 @@ main p img:not(:first-of-type) {
   animation: marquee 12s linear infinite;
 }
 
+.marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.marquee-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 10s linear infinite;
+  font-size: 1rem; /* adjust as needed */
+}
+
+
 @keyframes marquee {
   0%   { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
@@ -486,4 +501,23 @@ table.links thead {
 .cards p,
 .cards strong {
   color: black !important;
+}
+
+
+a {
+  color: cyan; /* default link color */
+  text-decoration: underline;
+}
+
+a:visited {
+  color: cyan; /* visited link color */
+}
+
+a:hover {
+  color: #00ffff; /* hover color – same as cyan, but change if you want a shade */
+  text-decoration: underline;
+}
+
+a:active {
+  color: cyan;
 }
