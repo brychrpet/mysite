@@ -546,3 +546,7 @@ a:active {
 body.magenta-h2-page h2 {
   color: magenta;
 }
+
+.section.magenta-h2-page h2 {
+  color: magenta;
+}
