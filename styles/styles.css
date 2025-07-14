@@ -543,6 +543,6 @@ a:active {
   animation: blink 1s step-start infinite;
 }
 
-.magenta-h2s h2 {
+body.magenta-h2-page h2 {
   color: magenta;
 }
