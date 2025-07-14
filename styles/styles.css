@@ -542,3 +542,7 @@ a:active {
 .blinky {
   animation: blink 1s step-start infinite;
 }
+
+.magenta-h2s h2 {
+  color: magenta;
+}
