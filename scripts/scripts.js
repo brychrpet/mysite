@@ -110,6 +110,17 @@ async function loadLazy(doc) {
   loadFonts();
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    const h1s = document.querySelectorAll('h1');
+    h1s.forEach((h1, index) => {
+      if (index !== 0) {
+        h1.classList.add('blinky');
+      }
+    });
+  }
+});
+
 /**
  * Loads everything that happens a lot later,
  * without impacting the user experience.
