@@ -474,11 +474,22 @@ main p img:not(:first-of-type) {
   font-size: 1rem; /* adjust as needed */
 }
 
+@media (max-width: 600px) {
+  .marquee-text {
+    font-size: 0.875rem; /* smaller on mobile */
+    padding-left: 100%; /* ensures it starts offscreen */
+  }
+}
 
 @keyframes marquee {
-  0%   { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
+
 
 /* Links */
 .block.links.hide-header thead {
