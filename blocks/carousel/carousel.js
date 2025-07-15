@@ -148,3 +148,5 @@ export default async function decorate(block) {
     bindEvents(block);
   }
 }
+
+// This is a single-line comment
