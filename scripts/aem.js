@@ -588,10 +588,17 @@ function decorateBlock(block) {
 /**
  * Decorates all blocks in a container element.
  * @param {Element} main The container element
- */
-function decorateBlocks(main) {
-  main.querySelectorAll('div.section > div > div').forEach(decorateBlock);
+
+* function decorateBlocks(main) {
+*  main.querySelectorAll('div.section > div > div').forEach(decorateBlock);
+* } 
+*/
+async function decorateBlocks(main) {
+  const blocks = [...main.querySelectorAll('div.section > div > div')];
+  blocks.forEach(decorateBlock);
+  await Promise.all(blocks.map(loadBlock));
 }
+
 
 /**
  * Loads a block named 'header' into header
