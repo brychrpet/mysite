@@ -8,15 +8,14 @@ const loadScript = (url, callback, type) => {
   const head = document.querySelector('head');
   const script = document.createElement('script');
   script.src = url;
-  if (type) {
-    script.setAttribute('type', type);
-  }
+  if (type) script.setAttribute('type', type);
   script.onload = callback;
   head.append(script);
   return script;
 };
 
-const getDefaultEmbed = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+const getDefaultEmbed = (url) => `
+  <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
       scrolling="no" allow="encrypted-media" title="Content from ${url.hostname}" loading="lazy">
     </iframe>
@@ -30,23 +29,25 @@ const embedYoutube = (url, autoplay) => {
   if (url.origin.includes('youtu.be')) {
     [, vid] = url.pathname.split('/');
   }
-  const embedHTML = `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
-      <iframe src="https://www.youtube.com${vid ? `/embed/${vid}?rel=0&v=${vid}${suffix}` : embed}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
-      allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Youtube" loading="lazy"></iframe>
+  return `
+    <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+      <iframe src="https://www.youtube.com${vid ? `/embed/${vid}?rel=0&v=${vid}${suffix}` : embed}"
+        style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope"
+        allowfullscreen scrolling="no" title="Content from Youtube" loading="lazy"></iframe>
     </div>`;
-  return embedHTML;
 };
 
 const embedVimeo = (url, autoplay) => {
   const [, video] = url.pathname.split('/');
   const suffix = autoplay ? '?muted=1&autoplay=1' : '';
-  const embedHTML = `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
-      <iframe src="https://player.vimeo.com/video/${video}${suffix}" 
-      style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
-      frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen  
-      title="Content from Vimeo" loading="lazy"></iframe>
+  return `
+    <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+      <iframe src="https://player.vimeo.com/video/${video}${suffix}"
+        style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
+        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+        title="Content from Vimeo" loading="lazy"></iframe>
     </div>`;
-  return embedHTML;
 };
 
 const embedTwitter = (url) => {
@@ -55,35 +56,49 @@ const embedTwitter = (url) => {
   return embedHTML;
 };
 
+const embedFreeCounter = (url) => {
+  const c = url.searchParams.get('c') || '';
+  const containerId = `sfc${c}`;
+  const scriptUrl = `https://counter1.optistats.ovh/private/counter.js?c=${c}&down=async`;
+  const fallbackImg = `https://counter1.optistats.ovh/private/freecounterstat.php?c=${c}`;
+
+  return `
+    <div class="embed-freecounter">
+      <div id="${containerId}"></div>
+      <script type="text/javascript" src="${scriptUrl}" async></script>
+      <br>
+      <a href="https://www.freecounterstat.com">web counter code</a>
+      <noscript>
+        <a href="https://www.freecounterstat.com" title="web counter code">
+          <img src="${fallbackImg}" border="0" alt="web counter code">
+        </a>
+      </noscript>
+    </div>`;
+};
+
 const loadEmbed = (block, link, autoplay) => {
-  if (block.classList.contains('embed-is-loaded')) {
-    return;
-  }
+  if (block.classList.contains('embed-is-loaded')) return;
 
   const EMBEDS_CONFIG = [
-    {
-      match: ['youtube', 'youtu.be'],
-      embed: embedYoutube,
-    },
-    {
-      match: ['vimeo'],
-      embed: embedVimeo,
-    },
-    {
-      match: ['twitter'],
-      embed: embedTwitter,
-    },
+    { match: ['youtube', 'youtu.be'], embed: embedYoutube },
+    { match: ['vimeo'], embed: embedVimeo },
+    { match: ['twitter'], embed: embedTwitter },
+    { match: ['freecounterstat', 'optistats.ovh'], embed: embedFreeCounter },
   ];
 
-  const config = EMBEDS_CONFIG.find((e) => e.match.some((match) => link.includes(match)));
   const url = new URL(link);
+  const config = EMBEDS_CONFIG.find((e) =>
+    e.match.some((match) => url.hostname.includes(match)),
+  );
+
   if (config) {
     block.innerHTML = config.embed(url, autoplay);
-    block.classList = `block embed embed-${config.match[0]}`;
+    block.className = `block embed embed-${config.match[0]}`;
   } else {
     block.innerHTML = getDefaultEmbed(url);
-    block.classList = 'block embed';
+    block.className = 'block embed';
   }
+
   block.classList.add('embed-is-loaded');
 };
 
