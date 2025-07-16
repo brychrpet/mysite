@@ -267,6 +267,14 @@ main > .section:first-of-type {
   }
 }
 
+.section.hero,
+.hero-image-centered,
+.section.hero-image {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 .section.hero-image-centered picture img {
   object-fit: cover;
   object-position: center;
