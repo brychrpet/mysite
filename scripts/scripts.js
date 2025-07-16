@@ -13,7 +13,6 @@ import {
   loadCSS,
 } from './aem.js';
 
-import './glossary.js';
 
 /**
  * Builds hero block and prepends to main in a new section.
