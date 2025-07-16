@@ -16,7 +16,7 @@ const loadScript = (url, callback, type) => {
 
 const getDefaultEmbed = (url) => `
   <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
-    <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
+    <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen
       scrolling="no" allow="encrypted-media" title="Content from ${url.hostname}" loading="lazy">
     </iframe>
   </div>`;
@@ -131,17 +131,16 @@ export default function decorate(block) {
     }
 
     block.classList.add('embed-is-loaded');
-
-  } else {
-    const raw = block.textContent.trim();
-    if (raw.startsWith('<script') || raw.startsWith('<div') || raw.startsWith('<a')) {
-      block.innerHTML = raw;
-      block.classList.add('embed-is-loaded');
-      return;
-    }
+    return;
   }
 
-  // lazy-load fallback
+  const raw = block.textContent.trim();
+  if (raw.startsWith('<script') || raw.startsWith('<div') || raw.startsWith('<a')) {
+    block.innerHTML = raw;
+    block.classList.add('embed-is-loaded');
+    return;
+  }
+
   if (placeholder) {
     const wrapper = document.createElement('div');
     wrapper.className = 'embed-placeholder';
@@ -153,33 +152,6 @@ export default function decorate(block) {
     block.innerHTML = '';
     block.append(wrapper);
   } else if (link) {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        observer.disconnect();
-        loadEmbed(block, link);
-      }
-    });
-    observer.observe(block);
-  }
-}
-
-
-
-if (rawHTML.startsWith('<script') || rawHTML.startsWith('<div') || rawHTML.startsWith('<a')) {
-  block.innerHTML = rawHTML;
-  return;
-}
-
-  if (placeholder) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'embed-placeholder';
-    wrapper.innerHTML = '<div class="embed-placeholder-play"><button type="button" title="Play"></button></div>';
-    wrapper.prepend(placeholder);
-    wrapper.addEventListener('click', () => {
-      loadEmbed(block, link, true);
-    });
-    block.append(wrapper);
-  } else {
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         observer.disconnect();
