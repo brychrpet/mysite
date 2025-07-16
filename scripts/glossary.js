@@ -69,11 +69,13 @@ function addGlossaryTooltips(root = document.body) {
 
   while (walker.nextNode()) {
     const node = walker.currentNode;
-    if (
-      node.nodeValue.trim() &&
-      node.parentNode &&
-      !['SCRIPT', 'STYLE', 'TEXTAREA'].includes(node.parentNode.tagName)
-    ) {
+if (
+  node.nodeValue &&
+  node.nodeValue.trim() &&
+  node.parentNode &&
+  node.parentNode.nodeType === 1 &&
+  !['SCRIPT', 'STYLE', 'TEXTAREA'].includes(node.parentNode.tagName)
+) {
       nodes.push(node);
     }
   }
