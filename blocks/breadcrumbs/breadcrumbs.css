@@ -1,0 +1,11 @@
+.breadcrumb-wrapper {
+  font-size: 0.9em;
+  margin-bottom: 1rem;
+}
+.breadcrumb-wrapper a {
+  color: #0a66c2;
+  text-decoration: none;
+}
+.breadcrumb-wrapper a:hover {
+  text-decoration: underline;
+}
