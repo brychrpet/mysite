@@ -110,7 +110,6 @@ export default function decorate(block) {
   if (linkEl) {
     link = linkEl.href;
 
-    // Load special embeds (e.g., YouTube, FreeCounter) or fallback iframe
     const url = new URL(link);
     const EMBEDS_CONFIG = [
       { match: ['youtube', 'youtu.be'], embed: embedYoutube },
@@ -120,11 +119,17 @@ export default function decorate(block) {
     ];
 
     const config = EMBEDS_CONFIG.find((e) =>
-      e.match.some((match) => url.hostname.includes(match))
+      e.match.some((match) => url.hostname.includes(match)),
     );
 
-    block.innerHTML = config ? config.embed(url) : getDefaultEmbed(url);
-    block.className = config ? `block embed embed-${config.match[0]}` : 'block embed';
+    if (config) {
+      block.innerHTML = config.embed(url);
+      block.className = `block embed embed-${config.match[0]}`;
+    } else {
+      block.innerHTML = getDefaultEmbed(url);
+      block.className = 'block embed';
+    }
+
     block.classList.add('embed-is-loaded');
 
   } else {
@@ -132,10 +137,11 @@ export default function decorate(block) {
     if (raw.startsWith('<script') || raw.startsWith('<div') || raw.startsWith('<a')) {
       block.innerHTML = raw;
       block.classList.add('embed-is-loaded');
+      return;
     }
   }
 
-  // optional: lazy load if placeholder exists
+  // lazy-load fallback
   if (placeholder) {
     const wrapper = document.createElement('div');
     wrapper.className = 'embed-placeholder';
@@ -144,8 +150,16 @@ export default function decorate(block) {
     wrapper.addEventListener('click', () => {
       loadEmbed(block, link, true);
     });
-    block.innerHTML = ''; // clear before appending
+    block.innerHTML = '';
     block.append(wrapper);
+  } else if (link) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        observer.disconnect();
+        loadEmbed(block, link);
+      }
+    });
+    observer.observe(block);
   }
 }
 
