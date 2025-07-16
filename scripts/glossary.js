@@ -61,33 +61,48 @@ const glossary = {
   'Dicarboxylic acids': 'Perpetuate low-grade immune activation, advancing fibrosis and autoimmunity',
 };
 
-function addGlossaryTooltips() {
-  const terms = Object.keys(glossary).sort((a, b) => b.length - a.length); // Longest terms first
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+function addGlossaryTooltips(root = document.body) {
+  const terms = Object.keys(glossary);
+
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+  const nodes = [];
 
   while (walker.nextNode()) {
     const node = walker.currentNode;
     if (
-      node.parentElement &&
-      !['SCRIPT', 'STYLE'].includes(node.parentElement.tagName) &&
-      !node.parentElement.closest('.tooltip')
+      node.nodeValue.trim() &&
+      node.parentNode &&
+      !['SCRIPT', 'STYLE', 'TEXTAREA'].includes(node.parentNode.tagName)
     ) {
-      let text = node.textContent;
-      for (const term of terms) {
-        const regex = new RegExp(`\\b(${term})\\b`, 'g');
-        if (regex.test(text)) {
-          const span = document.createElement('span');
-          span.innerHTML = text.replace(
-            regex,
-            `<span class="tooltip" title="${glossary[term]}">$1</span>`
-          );
-          node.replaceWith(...span.childNodes);
-          break;
-        }
-      }
+      nodes.push(node);
     }
   }
+
+  nodes.forEach((node) => {
+    const originalText = node.nodeValue;
+    let replaced = originalText;
+
+    terms.forEach((term) => {
+      const regex = new RegExp(`\\b(${term})\\b`, 'g');
+      replaced = replaced.replace(regex, `<span class="tooltip" title="${glossary[term]}">$1</span>`);
+    });
+
+    if (replaced !== originalText) {
+      const span = document.createElement('span');
+      span.innerHTML = replaced;
+      node.parentNode.replaceChild(span, node);
+    }
+  });
 }
 
-document.addEventListener('DOMContentLoaded', addGlossaryTooltips);
+// Observe content changes (for AEM Franklin's dynamic loading)
+const observer = new MutationObserver(() => {
+  addGlossaryTooltips(document.querySelector('main')); // only scan content
+});
+observer.observe(document.querySelector('main'), { childList: true, subtree: true });
+
+// Also run once after initial load
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => addGlossaryTooltips(document.querySelector('main')), 500);
+});, addGlossaryTooltips);
 
