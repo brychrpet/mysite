@@ -104,10 +104,32 @@ const loadEmbed = (block, link, autoplay) => {
 
 export default function decorate(block) {
   const placeholder = block.querySelector('picture');
-  const link = block.querySelector('a').href;
-  const rawHTML = block.querySelector('a')?.outerHTML || block.innerText.trim();
-  block.textContent = '';
+  const linkEl = block.querySelector('a');
+  let link = '';
+
+  if (linkEl) {
+    link = linkEl.href;
+    block.textContent = '';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = link;
+    iframe.frameBorder = '0';
+    iframe.allowFullscreen = true;
+    iframe.width = '100%';
+    iframe.height = '400';
+
+    block.appendChild(iframe);
+    block.classList.add('embed-is-loaded');
+
+  } else {
+    const raw = block.textContent.trim();
+    if (raw.startsWith('<')) {
+      block.innerHTML = raw;
+      block.classList.add('embed-is-loaded');
+    }
   }
+}
+
 
 if (rawHTML.startsWith('<script') || rawHTML.startsWith('<div') || rawHTML.startsWith('<a')) {
   block.innerHTML = rawHTML;
