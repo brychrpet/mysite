@@ -109,26 +109,46 @@ export default function decorate(block) {
 
   if (linkEl) {
     link = linkEl.href;
-    block.textContent = '';
 
-    const iframe = document.createElement('iframe');
-    iframe.src = link;
-    iframe.frameBorder = '0';
-    iframe.allowFullscreen = true;
-    iframe.width = '100%';
-    iframe.height = '400';
+    // Load special embeds (e.g., YouTube, FreeCounter) or fallback iframe
+    const url = new URL(link);
+    const EMBEDS_CONFIG = [
+      { match: ['youtube', 'youtu.be'], embed: embedYoutube },
+      { match: ['vimeo'], embed: embedVimeo },
+      { match: ['twitter'], embed: embedTwitter },
+      { match: ['freecounterstat', 'optistats.ovh'], embed: embedFreeCounter },
+    ];
 
-    block.appendChild(iframe);
+    const config = EMBEDS_CONFIG.find((e) =>
+      e.match.some((match) => url.hostname.includes(match))
+    );
+
+    block.innerHTML = config ? config.embed(url) : getDefaultEmbed(url);
+    block.className = config ? `block embed embed-${config.match[0]}` : 'block embed';
     block.classList.add('embed-is-loaded');
 
   } else {
     const raw = block.textContent.trim();
-    if (raw.startsWith('<')) {
+    if (raw.startsWith('<script') || raw.startsWith('<div') || raw.startsWith('<a')) {
       block.innerHTML = raw;
       block.classList.add('embed-is-loaded');
     }
   }
+
+  // optional: lazy load if placeholder exists
+  if (placeholder) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'embed-placeholder';
+    wrapper.innerHTML = '<div class="embed-placeholder-play"><button type="button" title="Play"></button></div>';
+    wrapper.prepend(placeholder);
+    wrapper.addEventListener('click', () => {
+      loadEmbed(block, link, true);
+    });
+    block.innerHTML = ''; // clear before appending
+    block.append(wrapper);
+  }
 }
+
 
 
 if (rawHTML.startsWith('<script') || rawHTML.startsWith('<div') || rawHTML.startsWith('<a')) {
