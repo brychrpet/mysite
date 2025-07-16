@@ -92,16 +92,16 @@ if (
     if (replaced !== originalText) {
       const span = document.createElement('span');
       span.innerHTML = replaced;
-      node.parentNode.replaceChild(span, node);
+     //node.parentNode.replaceChild(span, node);
     }
   });
 }
 
 // Observe content changes (for AEM Franklin's dynamic loading)
-const observer = new MutationObserver(() => {
-  addGlossaryTooltips(document.querySelector('main')); // only scan content
-});
-observer.observe(document.querySelector('main'), { childList: true, subtree: true });
+//const observer = new MutationObserver(() => {
+//  addGlossaryTooltips(document.querySelector('main')); // only scan content
+//});
+//observer.observe(document.querySelector('main'), { childList: true, subtree: true });
 
 // Also run once after initial load
 document.addEventListener('DOMContentLoaded', () => {
